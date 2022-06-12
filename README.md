@@ -6,6 +6,7 @@ Features:
 - Server Client Architecture - play with friends
 - Custom game field size, ship counts and if there is spacing between ships necessary
 - Queue to randomly play against another player or use a lobby (with password option)
+- Server is automatically found via Broadcast on Port 8000
 - One Server can host multiple games
 - Standalone headless server or start server within Client
 - Optional https if server has a valid certificate
