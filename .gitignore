@@ -110,3 +110,6 @@ Client/.idea/aws.xml
 Client/.idea/misc.xml
 Client/.idea/artifacts/Client_main_jar.xml
 Client/.idea/artifacts/Client_Server_main_jar.xml
+
+#user settings
+Settings.json
