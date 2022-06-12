@@ -39,7 +39,7 @@ class ServerScreen : IScreen(background = Images.Background) {
 
     private val customServerPort: TextInput =
         TextInput(PVector(700f, 180f), "Port", Images.Input_Number, Images.Input_Number_Hover).apply {
-            input = if (ClientApi.isConnected()) ClientApi.port.toString() else DefaultGamePort.toString()
+            input = DefaultGamePort.toString()
             numbersOnly = true
             onChange = { text ->
                 customServerConnect.isEnabled = text != null && customServerIP.input != null
@@ -75,7 +75,8 @@ class ServerScreen : IScreen(background = Images.Background) {
 
     private val serverPort: TextInput =
         TextInput(PVector(300f, 430f), "Port", Images.Input_Number, Images.Input_Number_Hover).apply {
-            input = DefaultGamePort.toString()
+            input =
+                if (ServerApi.isServerRunning()) ServerApi.serverSettings.port.toString() else DefaultGamePort.toString()
             numbersOnly = true
             onChange = {
                 startServer.isEnabled = it != null
@@ -83,10 +84,7 @@ class ServerScreen : IScreen(background = Images.Background) {
         }
 
     private val startServer = Button(
-        PVector(700f, 422f),
-        if (!ServerApi.isServerRunning()) "Start" else "Stop",
-        Images.Button,
-        Images.Button_Pressed
+        PVector(700f, 422f), if (!ServerApi.isServerRunning()) "Start" else "Stop", Images.Button, Images.Button_Pressed
     ).apply {
         clickedLeft = {
             serverPort.input?.also {
