@@ -26,7 +26,8 @@ object ServerApi {
     private val errorHandler = CoroutineExceptionHandler { _, error -> println("error occured in ServerApi $error") }
     internal val errorHandlingScope = CoroutineScope(errorHandler)
 
-    private var serverSettings = ServerSettings(-1, -1, false, DefaultGamePort)
+    var serverSettings = ServerSettings(-1, -1, false, DefaultGamePort)
+        private set
 
     private val clients = Collections.synchronizedSet<ServerClient>(LinkedHashSet())
     private val queue = Collections.synchronizedList<ServerClient>(LinkedList())
@@ -42,17 +43,25 @@ object ServerApi {
      *   when in config file no port -> search for port
      *   broadcast should only be used for local server
      */
-    fun startServer(serverSettings: ServerSettings) {
-        if (server == null) {
-            server = embeddedServer(Netty, serverSettings.port) {
-                configureServer(this@ServerApi)
-            }.start(wait = false)
+    fun startServer(serverSettings: ServerSettings): Boolean {
+        this.serverSettings = serverSettings
 
-            if (serverSettings.isLocalServer) {
-                startBroadcast()
+        try {
+            if (server == null) {
+                server = embeddedServer(Netty, serverSettings.port) {
+                    configureServer(this@ServerApi)
+                }.start(wait = false)
+
+                if (serverSettings.isLocalServer) {
+                    startBroadcast()
+                }
+                logger.info { "Server started:\n port: ${serverSettings.port} \n broadcastPort: $BroadcastPort" }
+                return true
             }
-            logger.info { "Server started:\n port: ${serverSettings.port} \n broadcastPort: $BroadcastPort" }
+        } catch (e: Exception) {
+            logger.error { "Server dit not start $e" }
         }
+        return false
     }
 
     fun stopServer() {
