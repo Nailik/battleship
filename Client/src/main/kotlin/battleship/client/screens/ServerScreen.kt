@@ -25,7 +25,7 @@ class ServerScreen : IScreen(background = Images.Background) {
 
     private val textCurrentServer = Text(
         PVector(300f, 50f),
-        if (ClientApi.isConnected()) "Connected to ${ClientApi.host}:${ClientApi.port}" else "Not Connected | Default: sinkships.kilianeller.de:${DefaultGamePort}"
+        if (ClientApi.isConnected()) "Connected to ${ClientApi.host}:${ClientApi.port}" else "Not Connected"
     )
 
     private val textServer = Text(PVector(300f, 150f), "Setup custom Server Connection")
@@ -39,7 +39,7 @@ class ServerScreen : IScreen(background = Images.Background) {
 
     private val customServerPort: TextInput =
         TextInput(PVector(700f, 180f), "Port", Images.Input_Number, Images.Input_Number_Hover).apply {
-            input = DefaultGamePort.toString()
+            input = if (ClientApi.isConnected()) ClientApi.port.toString() else DefaultGamePort.toString()
             numbersOnly = true
             onChange = { text ->
                 customServerConnect.isEnabled = text != null && customServerIP.input != null
@@ -68,7 +68,10 @@ class ServerScreen : IScreen(background = Images.Background) {
             }
         }
 
-    private val textLocal = Text(PVector(300f, 400f), if(!ServerApi.isServerRunning()) "Setup local server, you will automatically connect" else "Local server is running, when stopping you will be connected to default server" )
+    private val textLocal = Text(
+        PVector(300f, 400f),
+        if (!ServerApi.isServerRunning()) "Setup local server, you will automatically connect" else "Local server is running, when stopping you will be connected to default server"
+    )
 
     private val serverPort: TextInput =
         TextInput(PVector(300f, 430f), "Port", Images.Input_Number, Images.Input_Number_Hover).apply {
@@ -79,12 +82,17 @@ class ServerScreen : IScreen(background = Images.Background) {
             }
         }
 
-    private val startServer = Button(PVector(700f, 422f), if(!ServerApi.isServerRunning()) "Start" else "Stop", Images.Button, Images.Button_Pressed).apply {
+    private val startServer = Button(
+        PVector(700f, 422f),
+        if (!ServerApi.isServerRunning()) "Start" else "Stop",
+        Images.Button,
+        Images.Button_Pressed
+    ).apply {
         clickedLeft = {
             serverPort.input?.also {
-                if(!ServerApi.isServerRunning()) {
+                if (!ServerApi.isServerRunning()) {
                     Logic.startLocalServer(it)
-                }else{
+                } else {
                     Logic.stopLocalServer()
                 }
             }
@@ -93,26 +101,27 @@ class ServerScreen : IScreen(background = Images.Background) {
 
     private val text = Text(PVector(300f, 600f), "List of Local Servers")
 
-    private val localServerList = ListView(PVector(300f, 650f), PVector(800f, 400f), listOf<Pair<String, Int>>(), 3) { lobby ->
-        object : IListElement<Pair<String, Int>>(PVector(0f, 0f), PVector(800f, 80f), lobby) {
+    private val localServerList =
+        ListView(PVector(300f, 650f), PVector(800f, 400f), listOf<Pair<String, Int>>(), 3) { lobby ->
+            object : IListElement<Pair<String, Int>>(PVector(0f, 0f), PVector(800f, 80f), lobby) {
 
-            val title = Text(PVector(25f, 50f), "title")
+                val title = Text(PVector(25f, 50f), "title")
 
-            override fun onClickedLeft() {
-                //connect to local server
-                Logic.connectFromSettings(data.first, data.second, false)
-            }
+                override fun onClickedLeft() {
+                    //connect to local server
+                    Logic.connectFromSettings(data.first, data.second, false)
+                }
 
-            init {
-                this.addView(title)
-            }
+                init {
+                    this.addView(title)
+                }
 
-            override fun update(data: Pair<String, Int>) {
-                this.data = data
-                title.text = "${data.first}:${data.second}"
+                override fun update(data: Pair<String, Int>) {
+                    this.data = data
+                    title.text = "${data.first}:${data.second}"
+                }
             }
         }
-    }
 
 
     private val backBtn = Button(PVector(100f, 800f), null, Images.Back_Array, Images.Back_Array_Pressed).apply {
