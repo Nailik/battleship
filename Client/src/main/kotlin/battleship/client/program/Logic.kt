@@ -30,12 +30,12 @@ private val logger = KotlinLogging.logger {}
 
 object Logic {
 
-    private val errorHandler = CoroutineExceptionHandler { _, error -> }
+    private val errorHandler = CoroutineExceptionHandler { _, _ -> }
     private val errorHandlingScope = CoroutineScope(errorHandler)
 
     private val jsonFormat = Json { isLenient = true }
 
-    private var host = "sinkships.kilianeller.de"
+    private var host = ""
     private var port = DefaultGamePort
     var secure = true
 
@@ -119,10 +119,10 @@ object Logic {
                 // }
                 Sounds.loadAll()
                 Images.loadAll()
-                if (userSettings.userName.isEmpty()) {
-                    userState = UserState.CHOOSING_NAME
+                userState = if (userSettings.userName.isEmpty()) {
+                    UserState.CHOOSING_NAME
                 } else {
-                    tryConnect()
+                    UserState.SERVER_SETTINGS
                 }
             }
         } catch (e: Exception) {
@@ -138,12 +138,11 @@ object Logic {
      * user chose name and wants to connect to server
      */
     fun onChooseName(name: String) {
-        userState = UserState.CONNECTING
         //Save name
         userSettings.userName = name
         saveSettings()
 
-        tryConnect()
+        userState = UserState.SERVER_SETTINGS
     }
 
     fun connectFromSettings(host: String, port: Int, secure: Boolean) {
@@ -160,22 +159,32 @@ object Logic {
         ClientApi.connectToServer(host, port, secure)
     }
 
-    fun showSettings(){
-        if(currentPopUp == null){
+    fun showSettings() {
+        if (currentPopUp == null) {
             currentPopUp = SettingsPopUp()
         }
     }
 
     //start and connect to local server
     fun startLocalServer(port: String) {
-        ServerApi.startServer(ServerSettings(-1, -1, true, Integer.valueOf(port)))
-        connectFromSettings("127.0.0.1", Integer.valueOf(port), false)
+        userState = UserState.STARTING
+        errorHandlingScope.launch {
+            if (ServerApi.startServer(ServerSettings(-1, -1, true, Integer.valueOf(port)))) {
+                connectFromSettings("127.0.0.1", Integer.valueOf(port), false)
+            } else {
+                currentPopUp = InfoPopUp(
+                    "Unable to create server",
+                    "Check if port is already in use\ntry to select different port."
+                )
+                userState = UserState.SERVER_SETTINGS
+            }
+        }
     }
 
 
     fun stopLocalServer() {
         //connect to default
-        connectFromSettings("sinkships.kilianeller.de", DefaultGamePort, true)
+        connectFromSettings("", DefaultGamePort, true)
         ServerApi.stopServer()
     }
 
@@ -281,12 +290,22 @@ object Logic {
         currentPopUp = when (lobbyJoinResponse.lobbyStatus) {
             LobbyStatus.FAIL_PASSWORD_REQUIRED -> TextInputPopUp("Password Required", "Input Password").apply {
                 submit = { input ->
-                    ClientApi.sendData(DataPacket(DataType.JOIN_LOBBY, LobbyJoinRequest(lobbyJoinResponse.data!!.id, input)))
+                    ClientApi.sendData(
+                        DataPacket(
+                            DataType.JOIN_LOBBY,
+                            LobbyJoinRequest(lobbyJoinResponse.data!!.id, input)
+                        )
+                    )
                 }
             }
             LobbyStatus.FAIL_WRONG_PASSWORD -> TextInputPopUp("Password Wrong", "Input Password").apply {
                 submit = { input ->
-                    ClientApi.sendData(DataPacket(DataType.JOIN_LOBBY, LobbyJoinRequest(lobbyJoinResponse.data!!.id, input)))
+                    ClientApi.sendData(
+                        DataPacket(
+                            DataType.JOIN_LOBBY,
+                            LobbyJoinRequest(lobbyJoinResponse.data!!.id, input)
+                        )
+                    )
                 }
             }
             LobbyStatus.FAIL_LOBBY_FULL -> InfoPopUp("Failed", "Lobby already full")
