@@ -11,8 +11,6 @@ Features:
 - Standalone headless server or start server within Client
 - Optional https if server has a valid certificate
 
-More information read the Wiki, how to build the game and how the client server architecture works.
-
 ## Play
 
 - Download the game `battleship_client.jar` from Releases
@@ -22,6 +20,26 @@ More information read the Wiki, how to build the game and how the client server 
 If you are using windows you can [download OpenJdk from Microsoft for Windows](https://docs.microsoft.com/de-de/java/openjdk/download).
 
 If you cannot run the game try by starting it with `java -jar battleship_client.jar`.
+
+## Build
+
+To build the game, open the project in IntelliJ and Select `Build -> Build Artifacts`, .jar Files can be found in out/artifacts.
+
+## Server Client Architecture
+
+- Connection via websockets
+
+### Server
+
+- Server can be started from Client jar or from Server jar (Headless)
+- Runs Broadcast on Port 8000
+- Hosts multiple games (aka lobbies) and one Queue
+- Validates all API calls
+
+### Client
+
+- Receives id from Server
+- Only knows it's own ships and hit/miss result (no information about enemy)
 
 ## Images
 
