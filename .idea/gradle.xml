@@ -5,21 +5,21 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/Client" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Server" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/Client" />
             <option value="$PROJECT_DIR$/Server" />
           </set>
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/Server" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Client" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
+            <option value="$PROJECT_DIR$/Client" />
             <option value="$PROJECT_DIR$/Server" />
           </set>
         </option>
