@@ -1,7 +1,6 @@
 package battleship.client.animations.firework
 
 import battleship.client.program.Sketch
-import battleship.client.program.times
 import battleship.client.resources.Sounds
 import processing.core.PVector
 
@@ -14,7 +13,7 @@ import processing.core.PVector
 // A class to describe a group of Particles
 // An ArrayList is used to manage the list of Particles
 
- class ParticleSystem {
+class ParticleSystem {
 
     var gravity = PVector(0f, 0.12f)
     var particles // An arraylist for all the particles
@@ -56,7 +55,7 @@ import processing.core.PVector
 
     init {
         hu = Sketch.random(255f)
-        firework = Particle(Sketch.random(Sketch.iniWidth.toFloat() * Sketch.scaleFactor), Sketch.iniHeight.toFloat() * Sketch.scaleFactor , hu)
+        firework = Particle(Sketch.random(Sketch.iniWidth.toFloat() * Sketch.scaleFactor), Sketch.iniHeight.toFloat() * Sketch.scaleFactor, hu)
         particles = ArrayList() // Initialize the arraylist
     }
 }

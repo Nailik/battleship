@@ -1,8 +1,8 @@
 package battleship.server.webserver
 
-import kotlinx.coroutines.launch
 import battleship.server.data.*
 import battleship.server.webserver.ServerApi.errorHandlingScope
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 /**
@@ -13,7 +13,7 @@ class Game(serverClientOne: ServerClient, serverClientTwo: ServerClient, var gam
     private var playerOne = Player(serverClientOne, mutableListOf(), this)
     private var playerTwo = Player(serverClientTwo, mutableListOf(), this)
 
-    init{
+    init {
         playerOne.onGameStarted(this)
         playerTwo.onGameStarted(this)
     }
@@ -22,7 +22,7 @@ class Game(serverClientOne: ServerClient, serverClientTwo: ServerClient, var gam
     /**
      * game should start
      */
-    private fun onStartGame(){
+    private fun onStartGame() {
         //TODO problem vermutlich, dass das hier aus receive heraus von Server Client im Selben context ist
         errorHandlingScope.launch {
             playerOne.onUpdateGameStatus(UserGameState.SELECT_SHIPS)
@@ -31,11 +31,11 @@ class Game(serverClientOne: ServerClient, serverClientTwo: ServerClient, var gam
     }
 
     fun onUserReady() {
-        println("onUserReady ${playerOne.serverClient.status} ${ playerTwo.serverClient.status } ")
+        println("onUserReady ${playerOne.serverClient.status} ${playerTwo.serverClient.status} ")
         println("playerOne ${playerOne.serverClient.status}")
-        println("playerTwo ${ playerTwo.serverClient.status } ")
+        println("playerTwo ${playerTwo.serverClient.status} ")
         //TODO check nullpointer playertwo server client??
-        if(playerOne.serverClient.status == UserState.IN_GAME && playerTwo.serverClient.status == UserState.IN_GAME) {
+        if (playerOne.serverClient.status == UserState.IN_GAME && playerTwo.serverClient.status == UserState.IN_GAME) {
             //game has loaded for this user
             onStartGame()
         }
@@ -67,19 +67,20 @@ class Game(serverClientOne: ServerClient, serverClientTwo: ServerClient, var gam
                 //add to array
                 when (ship.orientation) {
                     Orientation.HORIZONTAL -> {
-                        for(x in (ship.centerPosition.x - ((ship.shipType-1)/2)) .. (ship.centerPosition.x + ship.shipType/2)){
-                            if(x < 0 || x >= gameSettings.fieldWidth || fieldMatrix[x][ship.centerPosition.y]){
+                        for (x in (ship.centerPosition.x - ((ship.shipType - 1) / 2))..(ship.centerPosition.x + ship.shipType / 2)) {
+                            if (x < 0 || x >= gameSettings.fieldWidth || fieldMatrix[x][ship.centerPosition.y]) {
                                 return null
-                            }else{
+                            } else {
                                 fieldMatrix[x][ship.centerPosition.y] = true
                             }
                         }
                     }
+
                     Orientation.VERTICAL -> {
-                        for(y in (ship.centerPosition.y - ((ship.shipType-1)/2)) .. (ship.centerPosition.y + ship.shipType/2)){
-                            if(y < 0 || y >= gameSettings.fieldHeight || fieldMatrix[ship.centerPosition.x][y]){
+                        for (y in (ship.centerPosition.y - ((ship.shipType - 1) / 2))..(ship.centerPosition.y + ship.shipType / 2)) {
+                            if (y < 0 || y >= gameSettings.fieldHeight || fieldMatrix[ship.centerPosition.x][y]) {
                                 return null
-                            }else{
+                            } else {
                                 fieldMatrix[ship.centerPosition.x][y] = true
                             }
                         }
@@ -87,7 +88,7 @@ class Game(serverClientOne: ServerClient, serverClientTwo: ServerClient, var gam
                 }
 
                 it.num -= 1
-            }?: kotlin.run {
+            } ?: kotlin.run {
                 return null
             }
         }
@@ -95,14 +96,14 @@ class Game(serverClientOne: ServerClient, serverClientTwo: ServerClient, var gam
         //check if all ships are set
         return necessarySelection.find { it.num != 0 }?.let {
             null
-        }?: run{
+        } ?: run {
             fieldMatrix
         }
     }
 
     //null is invalid, true is hit, false is miss
-    fun validateShot(position: Position, player: Player){
-        if(position.x >= 0 && position.x < gameSettings.fieldWidth && position.y >= 0 && position.y < gameSettings.fieldHeight) {
+    fun validateShot(position: Position, player: Player) {
+        if (position.x >= 0 && position.x < gameSettings.fieldWidth && position.y >= 0 && position.y < gameSettings.fieldHeight) {
             //TODO check not yet shot there
             val enemyPlayer = if (player == playerOne) {
                 playerTwo
@@ -114,12 +115,12 @@ class Game(serverClientOne: ServerClient, serverClientTwo: ServerClient, var gam
             player.shotFieldMatrix[position.x][position.y] = result
 
             //always check because it's possible to set no ship at all
-            if(checkGameFinished(enemyPlayer, player)){
-                    //player is winner
-                    //enemy is looser
-                    player.userGameStatus = UserGameState.END_SCREEN_WON
-                    enemyPlayer.userGameStatus = UserGameState.END_SCREEN_LOST
-                }else {
+            if (checkGameFinished(enemyPlayer, player)) {
+                //player is winner
+                //enemy is looser
+                player.userGameStatus = UserGameState.END_SCREEN_WON
+                enemyPlayer.userGameStatus = UserGameState.END_SCREEN_LOST
+            } else {
                 player.userGameStatus = if (result) {
                     UserGameState.SHOOTING
                 } else {
@@ -143,7 +144,7 @@ class Game(serverClientOne: ServerClient, serverClientTwo: ServerClient, var gam
     private fun checkGameFinished(target: Player, player: Player): Boolean {
         target.shipFieldMatrix.forEachIndexed { indexX, arrayOfPairs ->
             arrayOfPairs.forEachIndexed { indexY, pair ->
-                if(pair && player.shotFieldMatrix[indexX][indexY] == null){
+                if (pair && player.shotFieldMatrix[indexX][indexY] == null) {
                     //one field where player did not shoot yet
                     return false
                 }

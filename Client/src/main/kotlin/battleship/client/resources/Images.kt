@@ -1,13 +1,14 @@
 package battleship.client.resources
 
+import battleship.client.program.Sketch
 import mu.KotlinLogging
 import processing.core.PGraphics
 import processing.core.PImage
-import battleship.client.program.Sketch
 import java.awt.Graphics2D
 import javax.imageio.ImageIO
 
 private val logger = KotlinLogging.logger {}
+
 object Images {
 
     val Ship_Deko = getImage("/images/ship_deko.png")

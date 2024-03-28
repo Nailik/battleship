@@ -56,6 +56,7 @@ object GameLogic {
                         gameSettings = gameSettings
                         LoadingScreen()
                     }
+
                     UserGameState.SELECT_SHIPS -> SelectionScreen()
                     UserGameState.SELECT_SHIPS_READY -> currentScreen //just waiting
                     UserGameState.SHOOTING,
@@ -67,8 +68,10 @@ object GameLogic {
                             GameScreen()
                         }
                     }
+
                     UserGameState.END_SCREEN_LOST,
                     UserGameState.END_SCREEN_WON -> EndScreen()
+
                     else -> currentScreen
                 }
             }
@@ -256,6 +259,7 @@ object GameLogic {
                     ship
                 )
             }
+
             Orientation.VERTICAL -> {
                 position.y + (ship.shipType / 2) < gameSettings.fieldHeight && position.y - (ship.shipType / 2) + add >= 0 && isFreePlaceForShip(
                     position,

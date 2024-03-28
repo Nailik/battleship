@@ -1,13 +1,13 @@
 package battleship.client.interfaces
 
-import processing.core.PApplet
-import processing.core.PConstants
-import processing.core.PImage
-import processing.core.PVector
 import battleship.client.elements.Image
 import battleship.client.program.Sketch
 import battleship.client.program.plus
 import battleship.client.resources.Sizes
+import processing.core.PApplet
+import processing.core.PConstants
+import processing.core.PImage
+import processing.core.PVector
 
 abstract class IView(
     open var position: PVector,
@@ -60,12 +60,12 @@ abstract class IView(
         }
 
         if (isVisible) {
-            val finalPosition  = if(!disableOffset) {
+            val finalPosition = if (!disableOffset) {
                 offset = PVector(0f, 0f)
                 offset += parent?.position
                 offset += parent?.offset
                 position + offset
-            }else{
+            } else {
                 position
             }
 

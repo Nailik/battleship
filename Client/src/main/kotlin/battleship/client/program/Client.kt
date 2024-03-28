@@ -31,6 +31,7 @@ class Client(val socket: DefaultWebSocketSession) {
                     //TODO result not validated
                     // GameLogic.onStartShipSelection(jsonFormat.decodeFromString(data.data))
                 }
+
                 DataType.SHOT_RESULT -> GameLogic.shootResult(jsonFormat.decodeFromString(data.data))
                 DataType.SHOT_RECEIVED -> GameLogic.enemyShootResult(jsonFormat.decodeFromString(data.data))
                 DataType.STATUS -> {

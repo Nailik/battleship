@@ -1,15 +1,15 @@
 package battleship.client.screens
 
 import battleship.client.elements.Image
-import processing.core.PVector
-import battleship.client.program.GameLogic
 import battleship.client.elements.Text
 import battleship.client.gameviews.GameField
 import battleship.client.interfaces.IScreen
+import battleship.client.program.GameLogic
 import battleship.client.program.Logic
 import battleship.client.resources.Images
 import battleship.server.data.ShootResponse
 import battleship.server.data.UserGameState
+import processing.core.PVector
 
 /**
  * Spiel: (GameScreen)

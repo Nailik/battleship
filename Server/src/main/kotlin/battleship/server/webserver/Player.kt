@@ -5,7 +5,7 @@ import battleship.server.program.DataPacket
 
 class Player(val serverClient: ServerClient, private var shipSelection: List<Ship>, var game: Game) {
 
-    init{
+    init {
         serverClient.player = this
     }
 
@@ -13,7 +13,7 @@ class Player(val serverClient: ServerClient, private var shipSelection: List<Shi
 
     //set/unset
     var shipFieldMatrix = Array(game.gameSettings.fieldWidth) { Array(game.gameSettings.fieldHeight) { false } }
-    private set
+        private set
 
     //shot/hit/nothing
     var shotFieldMatrix = Array(game.gameSettings.fieldWidth) { Array<Boolean?>(game.gameSettings.fieldHeight) { null } }
@@ -22,7 +22,7 @@ class Player(val serverClient: ServerClient, private var shipSelection: List<Shi
     /**
      * game has started
      */
-    fun onGameStarted(startedGame: Game){
+    fun onGameStarted(startedGame: Game) {
         game = startedGame
     }
 
@@ -36,7 +36,7 @@ class Player(val serverClient: ServerClient, private var shipSelection: List<Shi
             shipSelection = data
             userGameStatus = UserGameState.SELECT_SHIPS_READY
             game.onUserSelectedShips()
-        }?: run{
+        } ?: run {
             TODO("invalid")
         }
     }
@@ -46,13 +46,13 @@ class Player(val serverClient: ServerClient, private var shipSelection: List<Shi
      */
     suspend fun onUpdateGameStatus(userGameStatus: UserGameState) {
         this.userGameStatus = userGameStatus
-        serverClient.send(DataPacket(DataType.GAME_STATUS,  userGameStatus))
+        serverClient.send(DataPacket(DataType.GAME_STATUS, userGameStatus))
     }
 
     /**
      * this player has loaded the game
      */
-    fun onReady(){
+    fun onReady() {
         game.onUserReady()
     }
 

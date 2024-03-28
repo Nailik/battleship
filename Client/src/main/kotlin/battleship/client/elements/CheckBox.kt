@@ -1,10 +1,10 @@
 package battleship.client.elements
 
-import processing.core.PImage
-import processing.core.PVector
 import battleship.client.interfaces.IViewGroup
 import battleship.client.resources.Images
 import battleship.client.resources.Sounds
+import processing.core.PImage
+import processing.core.PVector
 
 class CheckBox(
     position: PVector, var background_unchecked: PImage, var background_checked: PImage,
@@ -33,7 +33,7 @@ class CheckBox(
     }
 
     override fun onMouseOver(isMouseOver: Boolean) {
-        if(isEnabled) {
+        if (isEnabled) {
             if (isMouseOver) {
                 Sounds.Button_Click.play()
                 background = if (value) {

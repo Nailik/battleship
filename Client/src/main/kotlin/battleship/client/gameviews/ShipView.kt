@@ -1,23 +1,23 @@
 package battleship.client.gameviews
 
-import processing.core.PConstants
-import processing.core.PVector
 import battleship.client.elements.Image
 import battleship.client.program.Sketch
 import battleship.client.program.plus
 import battleship.client.resources.Images
+import battleship.server.data.Orientation
 import battleship.server.data.Position
 import battleship.server.data.Ship
-import battleship.server.data.Orientation
+import processing.core.PConstants
+import processing.core.PVector
 
 class ShipView(var ship: Ship, private val fieldSize: Float) : Image(
-    PVector(0f, 0f), when(ship.shipType){
-            2 -> Images.Ship_2_H
-            3 -> Images.Ship_3_H
-            4 -> Images.Ship_4_H
-            5 -> Images.Ship_5_H
-            else -> Images.Ship_2_H
-        }, PVector((fieldSize - 5) * ship.shipType, fieldSize - 5)
+    PVector(0f, 0f), when (ship.shipType) {
+        2 -> Images.Ship_2_H
+        3 -> Images.Ship_3_H
+        4 -> Images.Ship_4_H
+        5 -> Images.Ship_5_H
+        else -> Images.Ship_2_H
+    }, PVector((fieldSize - 5) * ship.shipType, fieldSize - 5)
 ) {
 
     init {
@@ -33,6 +33,7 @@ class ShipView(var ship: Ship, private val fieldSize: Float) : Image(
                     fieldSize * (newPosition.x + 0.5f) + fieldSize / 2f,
                     fieldSize * newPosition.y + fieldSize / 2f
                 )
+
                 Orientation.VERTICAL -> PVector(
                     fieldSize * newPosition.x + fieldSize / 2f,
                     fieldSize * (newPosition.y + 0.5f) + fieldSize / 2f
@@ -63,16 +64,17 @@ class ShipView(var ship: Ship, private val fieldSize: Float) : Image(
         size = PVector((fieldSize - 5) * ship.shipType, fieldSize - 5)
     }
 
-    private fun updateImage(){
+    private fun updateImage() {
         pImage = when (ship.orientation) {
-            Orientation.HORIZONTAL -> when(ship.shipType) {
+            Orientation.HORIZONTAL -> when (ship.shipType) {
                 2 -> Images.Ship_2_H
                 3 -> Images.Ship_3_H
                 4 -> Images.Ship_4_H
                 5 -> Images.Ship_5_H
                 else -> Images.Ship_2_H
             }
-            Orientation.VERTICAL -> when(ship.shipType) {
+
+            Orientation.VERTICAL -> when (ship.shipType) {
                 2 -> Images.Ship_2_V
                 3 -> Images.Ship_3_V
                 4 -> Images.Ship_4_V
@@ -87,7 +89,7 @@ class ShipView(var ship: Ship, private val fieldSize: Float) : Image(
 
         return if (ship.orientation == Orientation.HORIZONTAL) {
             super.checkIsMouseOver()
-        }else{
+        } else {
             Sketch.mousePosition.x >= (finalPosition.x - size.y / 2f) * (Sketch.scaleFactor) + 1 &&
                     Sketch.mousePosition.x <= (finalPosition.x + size.y / 2f) * (Sketch.scaleFactor) - 1 &&
                     Sketch.mousePosition.y >= (finalPosition.y - size.x / 2f) * (Sketch.scaleFactor) + 1 &&

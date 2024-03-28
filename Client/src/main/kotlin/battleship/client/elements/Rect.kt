@@ -1,9 +1,9 @@
 package battleship.client.elements
 
-import processing.core.PVector
-import battleship.client.program.Sketch
 import battleship.client.interfaces.IView
+import battleship.client.program.Sketch
 import battleship.client.resources.Colors
+import processing.core.PVector
 
 open class Rect(position: PVector, size: PVector, var color: Colors) : IView(position, null, size) {
 

@@ -1,4 +1,3 @@
-
 rootProject.name = "Client"
 include(":Server")
 project(":Server").projectDir = file("../Server")

@@ -1,10 +1,10 @@
 package battleship.client.elements
 
-import processing.core.PImage
-import processing.core.PVector
 import battleship.client.interfaces.IClickable
 import battleship.client.program.Sketch
 import battleship.client.resources.Sizes
+import processing.core.PImage
+import processing.core.PVector
 
 open class Image(
     position: PVector, var pImage: PImage,

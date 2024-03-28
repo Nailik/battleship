@@ -1,19 +1,21 @@
 package battleship.client.elements
 
+import battleship.client.interfaces.IView
+import battleship.client.program.Sketch
+import battleship.client.resources.Colors
+import battleship.client.resources.Sizes
 import processing.core.PApplet
 import processing.core.PConstants
 import processing.core.PShape
 import processing.core.PVector
-import battleship.client.program.Sketch
-import battleship.client.interfaces.IView
-import battleship.client.resources.Colors
-import battleship.client.resources.Sizes
 import kotlin.math.abs
 
-class Text(position: PVector,
-           _text: String,
-           var color: Colors = Colors.C_BLACK,
-           var textSize: Sizes = Sizes.SIZE_TXT_NORMAL) : IView(position) {
+class Text(
+    position: PVector,
+    _text: String,
+    var color: Colors = Colors.C_BLACK,
+    var textSize: Sizes = Sizes.SIZE_TXT_NORMAL
+) : IView(position) {
 
     var textWidth = 0f
         private set
@@ -24,13 +26,13 @@ class Text(position: PVector,
     private var maxY = 0f
 
     var text = _text
-    set(value) {
-        if(field != value){
-            field = value
+        set(value) {
+            if (field != value) {
+                field = value
 
-            calculateSize()
+                calculateSize()
+            }
         }
-    }
 
     init {
         calculateSize()
@@ -42,15 +44,15 @@ class Text(position: PVector,
         Sketch.fill(color.red(), color.green(), color.blue(), currentAlpha)
 
         //fix center mode
-        if(drawMode != PConstants.CENTER) {
+        if (drawMode != PConstants.CENTER) {
             Sketch.text(text, position.x, position.y)
-        }else{
+        } else {
             Sketch.text(text, position.x - textWidth / 2f, position.y - maxY + textHeight / 2f)
         }
     }
 
-    private fun calculateSize(){
-        if(text.isEmpty()){
+    private fun calculateSize() {
+        if (text.isEmpty()) {
             textWidth = 0f
             textHeight = 0f
             whitespace = 0f
@@ -88,6 +90,6 @@ class Text(position: PVector,
         textWidth -= whitespace // subtract whitespace of first character
 
         this.textWidth = textWidth
-        this.textHeight = abs(maxY+2f - minY)
+        this.textHeight = abs(maxY + 2f - minY)
     }
 }

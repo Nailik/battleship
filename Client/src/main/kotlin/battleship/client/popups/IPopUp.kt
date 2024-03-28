@@ -6,7 +6,6 @@ import battleship.client.program.GameLogic
 import battleship.client.program.Logic
 import battleship.client.resources.Images
 import battleship.client.resources.Sizes
-import battleship.server.data.UserState
 import processing.core.PConstants
 import processing.core.PVector
 

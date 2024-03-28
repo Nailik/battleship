@@ -1,7 +1,5 @@
 package battleship.client.popups
 
-import battleship.client.animations.RotationAnimation
-import battleship.client.elements.Button
 import battleship.client.elements.CheckBox
 import battleship.client.elements.HorizontalSlider
 import battleship.client.elements.Image

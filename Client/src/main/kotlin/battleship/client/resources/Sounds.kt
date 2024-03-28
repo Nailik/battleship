@@ -11,7 +11,7 @@ object Sounds {
     val Aye_Captain = SoundFile("/sounds/aye_captain.mp3", true, .4f)
     val Aye_Pirate = SoundFile("/sounds/aye_pirate.mp3", true, .4f)
 
-    fun loadAll(){ }
+    fun loadAll() {}
 
 
 }

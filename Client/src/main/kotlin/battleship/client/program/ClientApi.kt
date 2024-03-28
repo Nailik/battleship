@@ -26,10 +26,10 @@ import kotlinx.serialization.json.jsonPrimitive
 
 object ClientApi {
 
-    public var host: String = ""
+    var host: String = ""
         private set
 
-    public var port: Int = 0
+    var port: Int = 0
         private set
 
     private var client: Client? = null

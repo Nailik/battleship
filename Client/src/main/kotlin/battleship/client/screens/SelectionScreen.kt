@@ -1,16 +1,14 @@
 package battleship.client.screens
 
-import processing.core.PVector
 import battleship.client.elements.*
-import battleship.client.program.GameLogic
 import battleship.client.gameviews.GameField
 import battleship.client.gameviews.ShipView
 import battleship.client.interfaces.IScreen
+import battleship.client.program.GameLogic
 import battleship.client.program.Logic
-import battleship.client.program.UserSettings
 import battleship.client.resources.Images
 import battleship.server.data.*
-import processing.core.PConstants
+import processing.core.PVector
 
 /**
  * Schiffsauswahl: (SelectionScreen)
@@ -35,7 +33,7 @@ class SelectionScreen : IScreen(background = Images.Battlefield) {
     private var floatingShip: ShipView? = null
 
     private var playerName = Text(PVector(280f, 120f), Logic.userSettings.userName)
-    private val playerIcon = Image(PVector(50f, 20f), if(Logic.hasCreatedLobby) Images.Captain else Images.Pirate)
+    private val playerIcon = Image(PVector(50f, 20f), if (Logic.hasCreatedLobby) Images.Captain else Images.Pirate)
 
     /**
      * game field for selection
@@ -45,9 +43,11 @@ class SelectionScreen : IScreen(background = Images.Battlefield) {
     /**
      * info text
      */
-    private val infoText = Text(PVector(1050f, 180f), "Click on a ship and place it\nat the desired position.\n" +
-                                                                 "Use right mouse button to rotate.\n" +
-                                                                 "Ships can be moved by clicking on them.")
+    private val infoText = Text(
+        PVector(1050f, 180f), "Click on a ship and place it\nat the desired position.\n" +
+                "Use right mouse button to rotate.\n" +
+                "Ships can be moved by clicking on them."
+    )
 
     /**
      * button to save
@@ -68,7 +68,7 @@ class SelectionScreen : IScreen(background = Images.Battlefield) {
     private val numShip4 = Text(PVector(1160f, 750f), "")
     private val numShip5 = Text(PVector(1160f, 900f), "")
 
-    private val ship2 = Image( PVector(1180f, 450f), Images.Ship_2_H).apply {
+    private val ship2 = Image(PVector(1180f, 450f), Images.Ship_2_H).apply {
         clickedLeft = { updateFloatingShip(2) }
     }
     private val ship3 = Image(PVector(1180f, 600f), Images.Ship_3_H).apply {
@@ -77,7 +77,7 @@ class SelectionScreen : IScreen(background = Images.Battlefield) {
     private val ship4 = Image(PVector(1180f, 750f), Images.Ship_4_H).apply {
         clickedLeft = { updateFloatingShip(4) }
     }
-    private val ship5 = Image( PVector(1180f, 900f), Images.Ship_5_H).apply {
+    private val ship5 = Image(PVector(1180f, 900f), Images.Ship_5_H).apply {
         clickedLeft = { updateFloatingShip(5) }
     }
 
@@ -123,9 +123,9 @@ class SelectionScreen : IScreen(background = Images.Battlefield) {
             }
         }
 
-        if(GameLogic.gameSettings.touching){
+        if (GameLogic.gameSettings.touching) {
             infoText.text += "\nShips can touch each other."
-        }else{
+        } else {
             infoText.text += "\nShips need space in between."
         }
     }

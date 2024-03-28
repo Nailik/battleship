@@ -11,13 +11,15 @@ enum class Colors(var color: Int) {
     C_BLACK(0x000000),
     C_BLUE(0x187ccd);
 
-    fun red(): Float{
+    fun red(): Float {
         return Sketch.red(color)
     }
-    fun blue(): Float{
+
+    fun blue(): Float {
         return Sketch.blue(color)
     }
-    fun green(): Float{
+
+    fun green(): Float {
         return Sketch.green(color)
     }
 }

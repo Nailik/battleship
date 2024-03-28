@@ -2,7 +2,6 @@ package battleship.client.interfaces
 
 import processing.core.PImage
 import processing.core.PVector
-import battleship.client.elements.Image
 import java.util.*
 
 abstract class IViewGroup(position: PVector, background: PImage? = null, size: PVector? = null) : IClickable(position, background, size) {
@@ -12,16 +11,16 @@ abstract class IViewGroup(position: PVector, background: PImage? = null, size: P
     private var removeIViews = Collections.synchronizedList<IView>(mutableListOf())
     private var activeIViews: MutableList<IView> = Collections.synchronizedList(mutableListOf())
 
-    fun addView(view: IView){
-        if(addIViews.contains(view)){
+    fun addView(view: IView) {
+        if (addIViews.contains(view)) {
             removeView(view)
-        }else {
+        } else {
             view.attach(this)
         }
         addIViews.add(addIViews.size, view)
     }
 
-    fun removeView(IView: IView){
+    fun removeView(IView: IView) {
         removeIViews.add(IView)
     }
 
@@ -48,8 +47,8 @@ abstract class IViewGroup(position: PVector, background: PImage? = null, size: P
         activeIViews.clear()
     }
 
-    override fun onClickedLeft(view: IView){
-        if(view != activeView && view !is IScreen) {
+    override fun onClickedLeft(view: IView) {
+        if (view != activeView && view !is IScreen) {
             activeView?.isActive = false
             activeView = view
             view.isActive = true

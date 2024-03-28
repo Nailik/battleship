@@ -6,7 +6,7 @@ import battleship.client.resources.Images
 import processing.core.PVector
 
 //clouds in background
-object BackgroundAnimation : IViewGroup(PVector(0f,0f)){
+object BackgroundAnimation : IViewGroup(PVector(0f, 0f)) {
 
     /**
      * animation
@@ -41,15 +41,15 @@ object BackgroundAnimation : IViewGroup(PVector(0f,0f)){
         //animation hinzufügen
         animations.add(MoveAnimation(this, 0.30f))
         clickedLeft = {
-            counter ++
-            if(counter >= 10){
+            counter++
+            if (counter >= 10) {
                 this.pImage = Images.Ship_Deko_Broken
                 counter = 0
             }
         }
     }
 
-    init{
+    init {
         addView(cloud1)
         addView(cloud2)
         addView(cloud3)

@@ -2,12 +2,12 @@ package battleship.client.screens
 
 import battleship.client.animations.BackgroundAnimation
 import battleship.client.elements.*
-import processing.core.PVector
-import battleship.client.program.Logic
 import battleship.client.interfaces.IListElement
 import battleship.client.interfaces.IScreen
+import battleship.client.program.Logic
 import battleship.client.resources.Images
 import battleship.server.data.*
+import processing.core.PVector
 
 /**
  * Spiel beitreten (LobbyListScreen)

@@ -3,14 +3,12 @@ package battleship.client.program
 import com.jsyn.data.FloatSample
 import com.jsyn.util.SampleLoader
 import fr.delthas.javamp3.Sound
-import java.applet.Applet
 import java.io.BufferedInputStream
 import java.io.ByteArrayOutputStream
 import java.io.IOException
-import java.util.zip.GZIPInputStream
 
 //import processing.sound.Engine;
-data class SoundFile constructor(
+data class SoundFile(
     val var2: String,
     private val isSoundEffect: Boolean,
     private val camp: Float,

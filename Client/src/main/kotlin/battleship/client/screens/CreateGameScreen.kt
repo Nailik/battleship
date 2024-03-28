@@ -1,16 +1,16 @@
 package battleship.client.screens
 
 import battleship.client.animations.BackgroundAnimation
-import processing.core.PVector
-import battleship.client.program.Logic
 import battleship.client.elements.Button
 import battleship.client.elements.CheckBox
-import battleship.client.resources.Colors
 import battleship.client.elements.TextInput
 import battleship.client.interfaces.IScreen
+import battleship.client.program.Logic
+import battleship.client.resources.Colors
 import battleship.client.resources.Images
 import battleship.server.data.LobbySettings
 import battleship.server.data.UserState
+import processing.core.PVector
 
 /**
  * Spiel erstellen (CreateGameScreen)

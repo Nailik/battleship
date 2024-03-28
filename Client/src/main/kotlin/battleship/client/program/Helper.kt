@@ -1,24 +1,22 @@
 package battleship.client.program
 
-import kotlinx.serialization.json.encodeToJsonElement
-import processing.core.PFont
-import processing.core.PVector
 import battleship.server.data.DataPacket
 import battleship.server.data.DataType
 import battleship.server.program.jsonFormat
-import java.applet.Applet
+import kotlinx.serialization.json.encodeToJsonElement
+import processing.core.PFont
+import processing.core.PVector
 import java.awt.Font
-import java.io.InputStream
 import java.util.*
 
-inline fun <reified T>DataPacket(type: DataType, data: T) : DataPacket {
+inline fun <reified T> DataPacket(type: DataType, data: T): DataPacket {
     return DataPacket(type, jsonFormat.encodeToJsonElement(data).toString(), Logic.userSettings.uuid)
 }
 
 operator fun PVector.plus(position: PVector?): PVector {
     return position?.let {
         PVector(this.x + it.x, this.y + it.y)
-    }?: kotlin.run {
+    } ?: kotlin.run {
         this
     }
 }
@@ -26,7 +24,7 @@ operator fun PVector.plus(position: PVector?): PVector {
 operator fun PVector.minus(position: PVector?): PVector {
     return position?.let {
         PVector(this.x - it.x, this.y - it.y)
-    }?: kotlin.run {
+    } ?: kotlin.run {
         this
     }
 }

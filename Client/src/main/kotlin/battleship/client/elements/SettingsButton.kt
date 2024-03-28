@@ -15,9 +15,9 @@ object SettingsButton : IViewGroup(PVector(1850f, 70f)) {
     val image = Image(PVector(0f, 0f), Images.Settings).apply {
         drawMode = PConstants.CENTER
         clickedLeft = {
-            if(Logic.userState != UserState.IN_GAME) {
+            if (Logic.userState != UserState.IN_GAME) {
                 Logic.showSettings()
-            }else{
+            } else {
                 GameLogic.showSettings()
             }
         }

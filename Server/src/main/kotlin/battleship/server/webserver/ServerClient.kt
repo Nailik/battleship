@@ -10,7 +10,7 @@ import kotlinx.serialization.json.encodeToJsonElement
 class ServerClient(private val socket: DefaultWebSocketSession, val uuid: String, var name: String) {
 
     var status: UserState = UserState.STARTING
-    private set
+        private set
 
     private var lobby: Lobby? = null
     var player: Player? = null
@@ -53,24 +53,24 @@ class ServerClient(private val socket: DefaultWebSocketSession, val uuid: String
                     }
                 }
             }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             println(e)
         }
     }
 
     private suspend fun onJoinLobby(lobbyJoinRequest: LobbyJoinRequest) {
-        ServerApi.onJoinLobby(lobbyJoinRequest.id)?.also{
-            if(lobbyJoinRequest.password == null && it.settings.password != null){
+        ServerApi.onJoinLobby(lobbyJoinRequest.id)?.also {
+            if (lobbyJoinRequest.password == null && it.settings.password != null) {
                 //password missing
                 send(DataPacket(DataType.JOIN_LOBBY_FAILED, LobbyJoinResponse(it.data, LobbyStatus.FAIL_PASSWORD_REQUIRED)))
                 return
-            }else if(it.settings.password != null && lobbyJoinRequest.password != it.settings.password){
+            } else if (it.settings.password != null && lobbyJoinRequest.password != it.settings.password) {
                 //wrong password
                 send(DataPacket(DataType.JOIN_LOBBY_FAILED, LobbyJoinResponse(it.data, LobbyStatus.FAIL_WRONG_PASSWORD)))
                 return
             }
 
-            if(it.joinedPlayerUUID != null){
+            if (it.joinedPlayerUUID != null) {
                 //already two players in lobby
                 send(DataPacket(DataType.JOIN_LOBBY_FAILED, LobbyJoinResponse(it.data, LobbyStatus.FAIL_LOBBY_FULL)))
                 return
@@ -84,7 +84,7 @@ class ServerClient(private val socket: DefaultWebSocketSession, val uuid: String
                 it.createdPlayerUUID.lobbyUpdate(it)
                 it.joinedPlayerUUID?.joinedLobby(it)
             }
-        }?: run{
+        } ?: run {
             //lobby doesn't exist (anymore)
             send(DataPacket(DataType.JOIN_LOBBY_FAILED, LobbyJoinResponse(null, LobbyStatus.FAIL_LOBBY_CLOSED)))
             return
@@ -105,21 +105,27 @@ class ServerClient(private val socket: DefaultWebSocketSession, val uuid: String
                 //reset player and game
                 player = null
             }
+
             UserState.QUEUE -> {
                 ServerApi.onJoinQueue(this)
             }
+
             UserState.LOBBY_CREATED -> {
                 //TODO not ready
             }
+
             UserState.LOBBY_JOINED -> {
                 //TODO not ready
             }
+
             UserState.LOBBY_READY -> {
                 lobby?.also { ServerApi.onLobbyReady(it) }
             }
+
             UserState.IN_GAME -> {
                 player?.onReady()
             }
+
             else -> {}
         }
     }
@@ -131,7 +137,7 @@ class ServerClient(private val socket: DefaultWebSocketSession, val uuid: String
     /**
      * send List of lobbies to user
      */
-    suspend fun sendLobbyList(){
+    suspend fun sendLobbyList() {
         send(DataPacket(DataType.READ_LOBBY_LIST, ServerApi.getLobbyListJson()))
     }
 
@@ -164,7 +170,7 @@ class ServerClient(private val socket: DefaultWebSocketSession, val uuid: String
     /**
      * both players ready, game will start soon
      */
-    suspend fun onStartGame(gameSettings: GameSettings){
+    suspend fun onStartGame(gameSettings: GameSettings) {
         lobby = null
         send(DataPacket(DataType.GAME_STARTED, gameSettings))
     }
@@ -172,7 +178,7 @@ class ServerClient(private val socket: DefaultWebSocketSession, val uuid: String
     //save changed settings and send to other user
     private suspend fun onGameSettingsChanged(gameSettings: GameSettings) {
         lobby?.also {
-            if(it.createdPlayerUUID == this){ //only player who created lobby is allowed to update game settings
+            if (it.createdPlayerUUID == this) { //only player who created lobby is allowed to update game settings
                 it.data.gameSettings = gameSettings
                 it.joinedPlayerUUID?.status = UserState.LOBBY_JOINED
                 it.joinedPlayerUUID?.onGameSettingsUpdate(gameSettings)

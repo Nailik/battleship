@@ -1,10 +1,8 @@
 package battleship.client.elements
 
-import processing.core.PVector
-import battleship.client.interfaces.IViewGroup
 import battleship.client.interfaces.IListElement
-import battleship.client.resources.Colors
-import battleship.server.data.Orientation
+import battleship.client.interfaces.IViewGroup
+import processing.core.PVector
 
 class ListView<T>(
     position: PVector, size: PVector, var data: List<T>, var pageSize: Int = 5, var creator: ((element: T) -> IListElement<T>)
@@ -17,7 +15,7 @@ class ListView<T>(
 
     private val prevBtn = Button(PVector(size.x - 350, size.y - 80), "prev").apply {
         clickedLeft = {
-            if(pageIndex > 0) {
+            if (pageIndex > 0) {
                 pageIndex--
                 updateData(data)
                 updateButtonsEnabled()
@@ -27,7 +25,7 @@ class ListView<T>(
 
     private val nextBtn = Button(PVector(size.x - 100, size.y - 80), "next").apply {
         clickedLeft = {
-            if((pageIndex + 1) * pageSize < data.size ) {
+            if ((pageIndex + 1) * pageSize < data.size) {
                 pageIndex++
                 updateData(data)
                 updateButtonsEnabled()
@@ -42,7 +40,7 @@ class ListView<T>(
         updateButtonsEnabled()
     }
 
-    private fun updateButtonsEnabled(){
+    private fun updateButtonsEnabled() {
         prevBtn.isEnabled = pageIndex > 0
         nextBtn.isEnabled = (pageIndex + 1) * pageSize < data.size
     }
@@ -68,7 +66,7 @@ class ListView<T>(
                     elements[viewIndex].isVisible = true
                 }
             } else {
-                if(viewIndex < elements.size) {
+                if (viewIndex < elements.size) {
                     elements[viewIndex].isVisible = false
                 }
             }

@@ -7,7 +7,7 @@ import processing.core.PConstants
 import processing.core.PVector
 
 
-class Firework: IView(PVector(0f,0f)) {
+class Firework : IView(PVector(0f, 0f)) {
 
     var fireworks = mutableListOf<ParticleSystem>()
 

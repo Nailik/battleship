@@ -2,14 +2,14 @@ package battleship.client.screens
 
 import battleship.client.animations.BackgroundAnimation
 import battleship.client.animations.firework.Firework
-import processing.core.PVector
-import battleship.client.program.GameLogic
 import battleship.client.elements.Button
 import battleship.client.elements.Text
 import battleship.client.interfaces.IScreen
+import battleship.client.program.GameLogic
 import battleship.client.resources.Images
 import battleship.server.data.UserGameState
 import processing.core.PConstants
+import processing.core.PVector
 
 /**
  * Ende Bildschirm:
@@ -45,7 +45,7 @@ class EndScreen : IScreen(background = Images.Background) {
     override fun open() {
         if (GameLogic.gameState == UserGameState.END_SCREEN_WON) {
             BackgroundAnimation.ship1.pImage = Images.Ship_Deko
-        }else{
+        } else {
             BackgroundAnimation.ship1.pImage = Images.Ship_Deko_Broken
         }
 

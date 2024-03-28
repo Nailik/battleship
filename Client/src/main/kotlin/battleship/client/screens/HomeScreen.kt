@@ -1,7 +1,6 @@
 package battleship.client.screens
 
 import battleship.client.animations.BackgroundAnimation
-import processing.core.PVector
 import battleship.client.elements.Button
 import battleship.client.elements.TextInput
 import battleship.client.interfaces.IScreen
@@ -11,6 +10,7 @@ import battleship.client.program.Logic
 import battleship.client.resources.Images
 import battleship.server.data.DataType
 import battleship.server.data.UserState
+import processing.core.PVector
 
 /**
  * Startbildschirm: (StartScreen)

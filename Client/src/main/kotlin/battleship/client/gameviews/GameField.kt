@@ -1,14 +1,14 @@
 package battleship.client.gameviews
 
-import processing.core.PVector
 import battleship.client.elements.Image
-import battleship.client.program.GameLogic
 import battleship.client.interfaces.IViewGroup
+import battleship.client.program.GameLogic
 import battleship.client.resources.Images
+import battleship.server.data.Orientation
 import battleship.server.data.Position
 import battleship.server.data.Ship
-import battleship.server.data.Orientation
 import battleship.server.data.ShootResponse
+import processing.core.PVector
 
 //initially squared
 class GameField(position: PVector, size: Float) : IViewGroup(position, size = PVector(size, size)) {

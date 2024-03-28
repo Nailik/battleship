@@ -1,15 +1,15 @@
 package battleship.server.webserver
 
-import io.ktor.websocket.*
-import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import battleship.server.program.respondInformation
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
-import java.time.Duration
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
+import io.ktor.websocket.*
+import kotlinx.coroutines.channels.ClosedReceiveChannelException
+import java.time.Duration
 
 fun Application.configureServer(server: ServerApi) {
     install(ContentNegotiation) {

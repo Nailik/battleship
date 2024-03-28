@@ -21,15 +21,14 @@ Funktion:
 - Beide Spieler verbinden sich zum spiel oder Schiffe werden gespeichert
  */
 
-import battleship.client.animations.BackgroundAnimation
-import processing.core.PConstants
-import processing.core.PVector
 import battleship.client.animations.RotationAnimation
 import battleship.client.elements.Image
 import battleship.client.elements.Text
 import battleship.client.interfaces.IScreen
 import battleship.client.resources.Alpha
 import battleship.client.resources.Images
+import processing.core.PConstants
+import processing.core.PVector
 
 open class LoadingScreen(textString: String = "") :
     IScreen(background = Images.Background, enableSoundSettings = false) {

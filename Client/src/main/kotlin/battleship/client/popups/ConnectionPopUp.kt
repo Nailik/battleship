@@ -16,7 +16,8 @@ import processing.core.PVector
 class ConnectionPopUp : IPopUp("Unable to connect") {
 
     private val textView =
-        Text(PVector(size.x / 2, 475f),
+        Text(
+            PVector(size.x / 2, 475f),
             "You can try to reconnect\nor change the server\nin the settings."
         ).apply { drawMode = PConstants.CENTER }
 

@@ -1,18 +1,17 @@
 package battleship.client.elements
 
+import battleship.client.animations.BlinkAnimation
+import battleship.client.interfaces.IKeyListener
+import battleship.client.interfaces.IViewGroup
+import battleship.client.resources.Colors
+import battleship.client.resources.Images
+import battleship.client.resources.Sounds
 import processing.core.PApplet
 import processing.core.PConstants
 import processing.core.PImage
 import processing.core.PVector
 import processing.event.KeyEvent
 import processing.event.KeyEvent.RELEASE
-import processing.event.KeyEvent.TYPE
-import battleship.client.animations.BlinkAnimation
-import battleship.client.interfaces.IViewGroup
-import battleship.client.interfaces.IKeyListener
-import battleship.client.resources.Colors
-import battleship.client.resources.Images
-import battleship.client.resources.Sounds
 
 /**
  * clicken zum auswählen -> fängt dann texteingabe
@@ -115,21 +114,24 @@ class TextInput(
                         }
                     }
                 }
+
                 PApplet.DELETE -> {
                     input = null
                 }
+
                 PApplet.ENTER,
                 PApplet.RETURN,
                 PApplet.TAB -> {
                     submit?.invoke(input)
                 }
+
                 '.',
                 ',',
                 '_',
                 ' ',
                 in 'a'..'z',
                 in 'A'..'Z' -> {
-                    if(!numbersOnly) {
+                    if (!numbersOnly) {
                         input?.also {
                             input += event.key
                         } ?: run {
@@ -137,6 +139,7 @@ class TextInput(
                         }
                     }
                 }
+
                 in '0'..'9' -> {
                     input?.also {
                         input += event.key

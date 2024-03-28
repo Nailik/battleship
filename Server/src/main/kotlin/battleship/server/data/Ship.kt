@@ -3,10 +3,12 @@ package battleship.server.data
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Ship(var shipType: Int,
-                //if no center peace it's one to the left
-                var centerPosition: Position,
-                var orientation: Orientation) {
+data class Ship(
+    var shipType: Int,
+    //if no center peace it's one to the left
+    var centerPosition: Position,
+    var orientation: Orientation
+) {
 
     /**
      * returns a list of positions that are used by the ship
@@ -21,6 +23,7 @@ data class Ship(var shipType: Int,
                     list.add(Position(i, centerPosition.y))
                 }
             }
+
             Orientation.VERTICAL -> {
                 for (i in (centerPosition.y - shipType / 2 + add)..(centerPosition.y + shipType / 2)) {
                     list.add(Position(centerPosition.x, i))

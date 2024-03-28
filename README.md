@@ -3,6 +3,7 @@
 A simple Battleship game developed with Kotlin ([Ktor](https://ktor.io/) and coroutines) using [Processing](https://processing.org/de/).
 
 Features:
+
 - Server Client Architecture - play with friends
 - Custom game field size, ship counts and if there is spacing between ships necessary
 - Queue to randomly play against another player or use a lobby (with password option)

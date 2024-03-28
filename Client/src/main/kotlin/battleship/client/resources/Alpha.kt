@@ -1,7 +1,5 @@
 package battleship.client.resources
 
-import battleship.client.program.Sketch
-
 enum class Alpha(var alpha: Float) {
     A_DEFAULT(255f),
     A_BACKGROUND(128f),

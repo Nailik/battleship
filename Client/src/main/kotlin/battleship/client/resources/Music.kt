@@ -13,19 +13,19 @@ object Music {
     var Background_Game = SoundFile("/music/music_battle.mp3", false, .5f, 39.424)
         private set
 
-    fun check(){
+    fun check() {
         Background_Menu = Background_Menu.checkLoop()
         Background_Game = Background_Game.checkLoop()
     }
 
-    fun changeMusicOn(){
-        if(!Logic.userSettings.musicOn) {
+    fun changeMusicOn() {
+        if (!Logic.userSettings.musicOn) {
             Background_Menu.stop()
             Background_Game.stop()
         }
     }
 
-    fun changeLoudness(){
+    fun changeLoudness() {
         Background_Menu.updateSoundLevel()
         Background_Game.updateSoundLevel()
     }

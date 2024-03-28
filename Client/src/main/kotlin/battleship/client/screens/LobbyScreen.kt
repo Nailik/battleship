@@ -1,12 +1,12 @@
 package battleship.client.screens
 
-import processing.core.PConstants
-import processing.core.PVector
 import battleship.client.elements.*
-import battleship.client.program.Logic
 import battleship.client.interfaces.IScreen
+import battleship.client.program.Logic
 import battleship.client.resources.Images
 import battleship.server.data.*
+import processing.core.PConstants
+import processing.core.PVector
 
 /**
  * Spielstart (LobbyScreen)

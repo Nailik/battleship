@@ -9,8 +9,8 @@ const val OpenForConnections = "openForConnections"
 
 const val BroadcastPort = 8000
 const val DefaultGamePort = 5000
- val jsonFormat = Json { isLenient = true }
+val jsonFormat = Json { isLenient = true }
 
-inline fun <reified T>DataPacket(type: DataType, data: T) : DataPacket {
+inline fun <reified T> DataPacket(type: DataType, data: T): DataPacket {
     return DataPacket(type, Json.encodeToJsonElement(data).toString())
 }

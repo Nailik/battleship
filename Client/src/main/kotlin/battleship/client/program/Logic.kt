@@ -15,7 +15,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.ClosedReceiveChannelException
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
@@ -81,6 +80,7 @@ object Logic {
                         }
                         HomeScreen()
                     }
+
                     UserState.CREATE_GAME -> CreateGameScreen()
                     UserState.LOBBYLIST -> LobbyListScreen()
                     UserState.SERVER_SETTINGS -> ServerScreen()
@@ -88,10 +88,12 @@ object Logic {
                         hasCreatedLobby = false
                         LobbyScreen()
                     }
+
                     UserState.LOBBY_CREATED -> {
                         hasCreatedLobby = true
                         LobbyScreen()
                     }
+
                     UserState.QUEUE -> QueueScreen()
                     //nothing waiting for other player
                     UserState.LOBBY_READY -> currentScreen
@@ -298,6 +300,7 @@ object Logic {
                     )
                 }
             }
+
             LobbyStatus.FAIL_WRONG_PASSWORD -> TextInputPopUp("Password Wrong", "Input Password").apply {
                 submit = { input ->
                     ClientApi.sendData(
@@ -308,6 +311,7 @@ object Logic {
                     )
                 }
             }
+
             LobbyStatus.FAIL_LOBBY_FULL -> InfoPopUp("Failed", "Lobby already full")
             LobbyStatus.FAIL_LOBBY_CLOSED -> InfoPopUp("Failed", "Lobby not found.")
         }

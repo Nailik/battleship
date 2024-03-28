@@ -66,7 +66,7 @@ object ServerApi {
         server?.stop(100, 100)
     }
 
-    public fun isServerRunning(): Boolean {
+    fun isServerRunning(): Boolean {
         return server != null
     }
 

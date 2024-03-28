@@ -11,7 +11,7 @@ import processing.core.PVector
 // http://patreon.com/codingtrain
 // Code for:
 
- class Particle {
+class Particle {
     var location: PVector
     var velocity: PVector
     var acceleration: PVector

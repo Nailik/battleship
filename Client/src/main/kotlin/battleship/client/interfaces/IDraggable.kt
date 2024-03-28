@@ -1,8 +1,8 @@
 package battleship.client.interfaces
 
-import processing.core.PVector
 import battleship.client.program.Sketch
 import battleship.client.program.minus
+import processing.core.PVector
 
 abstract class IDraggable(position: PVector, size: PVector) : IClickable(position, null, size) {
 
@@ -15,7 +15,7 @@ abstract class IDraggable(position: PVector, size: PVector) : IClickable(positio
     override fun update() {
         super.update()
 
-        if(enableDrag && isMouseOver && Sketch.isMouseLeftPressed){
+        if (enableDrag && isMouseOver && Sketch.isMouseLeftPressed) {
             val distance = Sketch.oldMousePosition - Sketch.mousePosition
             position -= distance / Sketch.scaleFactor
         }

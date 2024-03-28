@@ -1,12 +1,11 @@
 package battleship.client.elements
 
+import battleship.client.interfaces.IViewGroup
+import battleship.client.resources.Images
+import battleship.client.resources.Sounds
 import processing.core.PConstants
 import processing.core.PImage
 import processing.core.PVector
-import battleship.client.interfaces.IViewGroup
-import battleship.client.program.Sketch
-import battleship.client.resources.Images
-import battleship.client.resources.Sounds
 
 open class Button(
     position: PVector,

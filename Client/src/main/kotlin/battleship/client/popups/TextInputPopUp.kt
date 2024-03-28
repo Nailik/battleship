@@ -1,13 +1,9 @@
 package battleship.client.popups
 
-import processing.core.PVector
 import battleship.client.elements.Button
-import battleship.client.elements.Text
 import battleship.client.elements.TextInput
-import battleship.client.interfaces.IView
-import battleship.client.program.Logic
 import battleship.client.resources.Images
-import battleship.server.data.UserState
+import processing.core.PVector
 
 class TextInputPopUp(text: String, hint: String? = null) : IPopUp(text) {
 
