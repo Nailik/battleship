@@ -1,11 +1,9 @@
 package battleship.client.program
 
-import io.ktor.http.cio.websocket.*
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.decodeFromString
 import battleship.server.data.DataPacket
 import battleship.server.data.DataType
 import battleship.server.program.jsonFormat
+import io.ktor.websocket.*
 
 
 /**
@@ -13,7 +11,6 @@ import battleship.server.program.jsonFormat
  */
 class Client(val socket: DefaultWebSocketSession) {
 
-    @OptIn(ExperimentalSerializationApi::class)
     fun receive(frame: Frame) {
 
         (frame as? Frame.Text?)?.also { text ->

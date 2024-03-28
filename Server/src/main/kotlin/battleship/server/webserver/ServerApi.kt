@@ -1,19 +1,17 @@
 package battleship.server.webserver
 
+import battleship.server.data.*
+import battleship.server.program.*
 import io.ktor.http.*
-import io.ktor.http.cio.websocket.*
 import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import io.ktor.util.network.*
 import io.ktor.utils.io.core.*
+import io.ktor.websocket.*
 import kotlinx.coroutines.*
 import kotlinx.serialization.json.encodeToJsonElement
 import mu.KotlinLogging
-//import mu.KotlinLogging
-import battleship.server.data.*
-import battleship.server.program.*
 import java.util.*
 import kotlin.random.Random
 
@@ -80,7 +78,7 @@ object ServerApi {
 
         try {
             val udpSocket = aSocket(ActorSelectorManager(Dispatchers.IO)).udp()
-                .connect(NetworkAddress("192.168.178.255", BroadcastPort)) {
+                .connect(InetSocketAddress("192.168.178.255", BroadcastPort)) {
                     broadcast = true
                 }
 
@@ -88,7 +86,7 @@ object ServerApi {
                 while (broadcastActivated) {
                     val data = Datagram(BytePacketBuilder().apply {
                         writeText("{status: \"$OpenForConnections\", port: ${serverSettings.port}}")
-                    }.build(), NetworkAddress("192.168.178.255", BroadcastPort))
+                    }.build(), InetSocketAddress("192.168.178.255", BroadcastPort))
 
                     udpSocket.outgoing.send(data)
                     delay(500)

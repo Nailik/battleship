@@ -1,8 +1,8 @@
 package battleship.server.program
 
-import io.ktor.application.*
 import io.ktor.http.*
-import io.ktor.response.*
+import io.ktor.server.application.*
+import io.ktor.server.response.*
 
 data class Response(val httpStatusCode: HttpStatusCode, val information: Any)
 

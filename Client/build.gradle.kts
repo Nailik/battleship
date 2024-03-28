@@ -15,27 +15,23 @@ application {
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://jogamp.org/deployment/maven/")
+    }
 }
 
 dependencies {
+    val ktorVersion = "2.3.9"
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(fileTree(mapOf("dir" to "jogl", "include" to listOf("*.jar"))))
 
     implementation(project(":Server"))
+    implementation("io.ktor:ktor-client-cio:$ktorVersion")
+    implementation("io.ktor:ktor-client-websockets:$ktorVersion")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
 
-    implementation("io.github.microutils:kotlin-logging-jvm:2.0.11")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.10")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
-    implementation("io.ktor:ktor-server-core:1.6.3")
-    implementation("io.ktor:ktor-client-cio:1.6.3")
-    implementation("io.ktor:ktor-serialization:1.6.3")
-    implementation("io.ktor:ktor-websockets:1.6.3")
-    implementation("io.ktor:ktor-server-netty:1.6.3")
-    implementation("ch.qos.logback:logback-classic:1.2.6")
-    implementation("io.ktor:ktor-client-serialization:1.6.3")
-
-    implementation("org.jogamp.gluegen:gluegen-rt-main:2.3.2")
-    implementation("org.jogamp.jogl:jogl-all:2.3.2")
+    implementation("org.jogamp.gluegen:gluegen-rt-main:2.5.0")
+    implementation("org.jogamp.jogl:jogl-all:2.5.0")
 }
 
 buildscript {

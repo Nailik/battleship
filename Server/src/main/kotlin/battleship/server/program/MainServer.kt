@@ -8,7 +8,6 @@ import battleship.server.webserver.ServerSettings
 /**
  * start class of server
  */
-fun main(args: Array<String>) {
-    //logger.info{ "main" }
+fun main() {
     ServerApi.startServer(ServerSettings(-1, -1, false, DefaultGamePort))
 }

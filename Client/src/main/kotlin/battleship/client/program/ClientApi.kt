@@ -1,27 +1,28 @@
 package battleship.client.program
 
-import io.ktor.client.*
-import io.ktor.client.engine.cio.*
-import io.ktor.client.features.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.observer.*
-import io.ktor.client.features.websocket.*
-import io.ktor.client.request.*
-import io.ktor.http.*
-import io.ktor.http.cio.websocket.*
-import io.ktor.network.selector.*
-import io.ktor.network.sockets.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.ClosedReceiveChannelException
-import kotlinx.serialization.json.encodeToJsonElement
-import processing.data.JSONObject
 import battleship.server.data.DataPacket
 import battleship.server.data.UserState
 import battleship.server.program.BroadcastPort
 import battleship.server.program.OpenForConnections
 import battleship.server.program.jsonFormat
-import java.net.ConnectException
-import java.net.InetSocketAddress
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.observer.*
+import io.ktor.client.plugins.websocket.*
+import io.ktor.client.request.*
+import io.ktor.http.*
+import io.ktor.network.selector.*
+import io.ktor.network.sockets.*
+import io.ktor.serialization.kotlinx.json.*
+import io.ktor.websocket.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.ClosedReceiveChannelException
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.jsonPrimitive
 
 object ClientApi {
 
@@ -44,7 +45,9 @@ object ClientApi {
             println("HTTP status: ${response.status.value}")
         }
         install(WebSockets)
-        install(JsonFeature)
+        install(ContentNegotiation) {
+            json()
+        }
         defaultRequest {
             header(HttpHeaders.ContentType, ContentType.Application.Json)
             contentType(ContentType.Application.Json)
@@ -108,7 +111,7 @@ object ClientApi {
     fun searchLocalServer(onFoundNewServer: (List<Pair<String, Int>>) -> Unit) {
         foundServers.clear()
         socket = aSocket(ActorSelectorManager(Dispatchers.IO)).udp()
-            .bind(InetSocketAddress(BroadcastPort)) {
+            .bind(InetSocketAddress("127.0.0.1", BroadcastPort)) {
                 broadcast = true
                 reuseAddress = true
             }
@@ -118,8 +121,8 @@ object ClientApi {
             while (true) {
                 socket?.incoming?.receive()?.also {
                     val text = it.packet.readText()
-                    val json = JSONObject.parse(text)
-                    if (json["status"] == OpenForConnections) {
+                    val json = Json.decodeFromString<JsonObject>(text)
+                    if (json["status"]?.jsonPrimitive?.content == OpenForConnections) {
                         val host = it.address.toString().replace("/", "").split(":").first()
                         val pair = Pair(host, json["port"] as Int)
                         if (!foundServers.contains(pair)) {

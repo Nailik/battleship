@@ -1,14 +1,11 @@
 package battleship.server.webserver
 
-import io.ktor.http.cio.websocket.*
+import battleship.server.data.*
+import battleship.server.program.*
+import io.ktor.websocket.*
 import kotlinx.coroutines.launch
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.encodeToJsonElement
-import battleship.server.data.*
-import battleship.server.program.jsonFormat
-import battleship.server.program.*
 
 class ServerClient(private val socket: DefaultWebSocketSession, val uuid: String, var name: String) {
 
@@ -18,7 +15,6 @@ class ServerClient(private val socket: DefaultWebSocketSession, val uuid: String
     private var lobby: Lobby? = null
     var player: Player? = null
 
-    @OptIn(ExperimentalSerializationApi::class)
     suspend fun receive(frame: Frame) {
         try {
 
