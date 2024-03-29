@@ -1,13 +1,11 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     application
-    kotlin("jvm")
+    kotlin("jvm") version "1.9.23"
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 group = "battleship.client"
-version = "0.0.1"
+version = "0.0.2"
 
 application {
     mainClass.set("battleship.client.program.SketchKt")
@@ -40,6 +38,10 @@ buildscript {
     }
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+kotlin {
+    sourceSets.all {
+        languageSettings {
+            languageVersion = "1.8"
+        }
+    }
 }
